@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify
 
-face_attendance_bp = Blueprint('face-attendance', __name__, url_prefix='/face-attendance')
+health_bp = Blueprint('api-health', __name__)
 
-@face_attendance_bp.route('/health', methods=['GET'])
+@health_bp.route('/start', methods=['GET'])
 def health_check():
     """
     Simple health check endpoint to verify if the app is up and running.
