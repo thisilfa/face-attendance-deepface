@@ -3,10 +3,13 @@ import time
 import logging
 from datetime import datetime
 from threading import Thread
+from os.path import dirname, join, realpath
 
-# Log directory
-LOG_DIR = "root_app/root_app/public/logs"
-os.makedirs(LOG_DIR, exist_ok=True)
+base_path = dirname(dirname(realpath(__file__)))
+log_dir = join(base_path, 'public', 'logs')
+
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir, exist_ok=True)
 
 # Function to configure logging
 def configure_logging(log_file):
@@ -30,12 +33,12 @@ def configure_logging(log_file):
 def validate_log_file():
     """Checks and creates the log file for the current date."""
     # Ensure the log directory exists
-    if not os.path.exists(LOG_DIR):
-        os.makedirs(LOG_DIR)
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
 
     # Determine the current log file based on the date
     current_date = datetime.now().strftime('%Y-%m-%d')
-    log_file = os.path.join(LOG_DIR, f"{current_date}.log")
+    log_file = os.path.join(log_dir, f"{current_date}.log")
 
     # Create the log file if it doesn't exist
     if not os.path.exists(log_file):

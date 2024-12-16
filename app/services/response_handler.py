@@ -1,8 +1,18 @@
 import os
 import time
-import datetime
+from datetime import datetime
 from os.path import join, dirname, realpath
 from werkzeug.utils import secure_filename
+
+def handle_unprocessed(image_file):
+    save_img('unprocessed', image_file, None)
+    return {
+        'message': "Internal error while processing this image.",
+        'data': {
+            'registration_number': None,
+            'name': None
+        }
+    }
 
 def handle_no_face_detected(image_file):
     save_img('not-detected', image_file, None)
@@ -64,7 +74,8 @@ def save_img(metrics, image_file, name):
         'spoofing': 'spoofing',
         'unrecognized': 'unrecognized',
         'mismatched': 'mismatched',
-        'recognized': 'recognized'
+        'recognized': 'recognized',
+        'unprocessed': 'unprocessed'
     }
     base_path = dirname(realpath('__file__'))
     dataset_path = datetime.now().strftime('%Y-%m-%d')
